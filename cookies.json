@@ -1,1 +1,16 @@
-{}
+{
+  "central.carleton.ca": {
+    "/prod": {
+      "TESTID": {
+        "key": "TESTID",
+        "value": "set",
+        "hostOnly": true,
+        "domain": "central.carleton.ca",
+        "path": "/prod",
+        "pathIsDefault": true,
+        "lastAccessed": "2014-12-19T03:01:28.933Z",
+        "creation": "2014-12-19T03:01:28.540Z"
+      }
+    }
+  }
+}
