@@ -1,16 +1,28 @@
 var jsdom = require("jsdom");
 var fs = require("fs");
+var FileCookieStore = require('tough-cookie-filestore');
 var jquery = fs.readFileSync("./jquery.js", "utf-8");
 var request = require("request");
 
 var LOGIN_URL = 'https://central.carleton.ca/prod/twbkwbis.P_ValLogin';
 var VIEW_GRADE_URL = 'https://central.carleton.ca/prod/bwskogrd.P_ViewGrde';
-var WINTER_2014_TERM = '201410';
-var FALL_2014_TERM = '201430';
+var WINTER_CODE = '10';
+var FALL_CODE = '30';
 
-var j = request.jar();
+var FALL_2010_TERM = '2010' + FALL_CODE;
+var WINTER_2011_TERM = '2011' + WINTER_CODE;
+var FALL_2011_TERM = '2011' + FALL_CODE;
+var WINTER_2012_TERM = '2012' + WINTER_CODE;
+var FALL_2012_TERM = '2012' + FALL_CODE;
+var WINTER_2013_TERM = '2013' + WINTER_CODE;
+var FALL_2013_TERM = '2013' + FALL_CODE;
+var WINTER_2014_TERM = '2014' + WINTER_CODE;
+var FALL_2014_TERM = '2014' + FALL_CODE;
+
+var j = request.jar(new FileCookieStore('cookies.json'));
 request = request.defaults({ jar: j });
 // trick carleton into thinking we are a browser that saves cookies
+// so that when we login, it gives us a session id in the set-cookie header.
 j.setCookie(request.cookie('TESTID=set;'), LOGIN_URL);
 
 var STUDENT_NUMBER = process.env.CARLETON_STUDENT_NUMBER;
@@ -55,18 +67,21 @@ if(!STUDENT_NUMBER) {
 }
 
 function getGrades() {
-  request.post({
-    url: LOGIN_URL,
-    form: {
-      'sid': STUDENT_NUMBER,
-      'PIN': PIN_NUMBER
-    }},
-    function(err, resp, body) {
-      request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
-        parseGradeHTML(resp.body);
-      });
-    }
-  );
+  request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
+    parseGradeHTML(resp.body);
+  });
+  // request.post({
+  //   url: LOGIN_URL,
+  //   form: {
+  //     'sid': STUDENT_NUMBER,
+  //     'PIN': PIN_NUMBER
+  //   }},
+  //   function(err, resp, body) {
+  //     request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
+  //       parseGradeHTML(resp.body);
+  //     });
+  //   }
+  // );
 }
 
 function parseGradeHTML(html) {
