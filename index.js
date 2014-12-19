@@ -68,38 +68,43 @@ if(!STUDENT_NUMBER) {
 
 function getGrades() {
   request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
-    parseGradeHTML(resp.body);
+    parseGradeHTML(resp.body, true);
   });
-  // request.post({
-  //   url: LOGIN_URL,
-  //   form: {
-  //     'sid': STUDENT_NUMBER,
-  //     'PIN': PIN_NUMBER
-  //   }},
-  //   function(err, resp, body) {
-  //     request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
-  //       parseGradeHTML(resp.body);
-  //     });
-  //   }
-  // );
 }
 
-function parseGradeHTML(html) {
+function loginThenGetGrades() {
+  request.post({
+    url: LOGIN_URL,
+    form: {
+      'sid': STUDENT_NUMBER,
+      'PIN': PIN_NUMBER
+    }},
+    function(err, resp, body) {
+      request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
+        parseGradeHTML(resp.body);
+      });
+    }
+  );
+}
+
+function parseGradeHTML(html, wasTokenAttempt) {
   jsdom.env({
     html: html,
-    src: [jquery],
+    src: [ jquery ],
     done: function (errors, window) {
       var $ = window.$;
-      var title = $("title").text();
-
-      if(title === 'User Login') {
-        console.log('Your login failed. Please check your login credentials.');
+      if($("title").text() === 'User Login') {
+        if(wasTokenAttempt) {
+          console.log('Login failed with token, attempting again with credentials...');
+          loginThenGetGrades();
+        } else {
+          console.log('Your login failed. Please check your login credentials.');
+        }
       } else {
         var count = 0;
-
         var gradeTable = $($("table.datadisplaytable")[1]);
         var outputString = "";
-         gradeTable.find("td.dddefault").each(function () {
+        gradeTable.find("td.dddefault").each(function () {
           var countmod = (count % 11);
           switch(countmod) {
             case 0: {
