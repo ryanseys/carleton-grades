@@ -62,13 +62,13 @@ if(!STUDENT_NUMBER) {
     rl.close();
   });
 } else {
-  getGrades();
+  getGrades(true);
   rl.close();
 }
 
-function getGrades() {
+function getGrades(wasTokenAttempt) {
   request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
-    parseGradeHTML(resp.body, true);
+    parseGradeHTML(resp.body, wasTokenAttempt);
   });
 }
 
@@ -80,9 +80,7 @@ function loginThenGetGrades() {
       'PIN': PIN_NUMBER
     }},
     function(err, resp, body) {
-      request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
-        parseGradeHTML(resp.body);
-      });
+      getGrades(false);
     }
   );
 }
