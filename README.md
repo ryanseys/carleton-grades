@@ -1,5 +1,6 @@
-carleton-grades
-===============
+# Carleton Grades
+
+Pull grades from Carleton Central for Carleton University
 
 ## Installation
 
