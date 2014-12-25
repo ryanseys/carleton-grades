@@ -1,0 +1,31 @@
+{
+  "name": "carleton-grades",
+  "version": "1.0.0",
+  "description": "Pull grades from Carleton Central for Carleton University",
+  "main": "index.js",
+  "dependencies": {
+    "jsdom": "^1.5.0",
+    "request": "^2.51.0",
+    "tough-cookie": "^0.12.1",
+    "tough-cookie-filestore": "0.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanseys/carleton-grades.git"
+  },
+  "keywords": [
+    "carleton",
+    "university",
+    "grades"
+  ],
+  "author": "Ryan Seys",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryanseys/carleton-grades/issues"
+  },
+  "homepage": "https://github.com/ryanseys/carleton-grades"
+}
