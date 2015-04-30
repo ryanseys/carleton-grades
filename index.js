@@ -20,6 +20,13 @@ var WINTER_2014_TERM = '2014' + WINTER_CODE;
 var FALL_2014_TERM = '2014' + FALL_CODE;
 var WINTER_2015_TERM = '2015' + WINTER_CODE;
 
+if(!fs.existsSync('cookies.json')){
+  fs.writeFile('cookies.json', '{}', function (err) {
+    if (err) throw err;
+    console.log('No cookies found. Baked some fresh.');
+  });
+}
+
 var j = request.jar(new FileCookieStore('cookies.json'));
 request = request.defaults({ jar: j });
 // trick carleton into thinking we are a browser that saves cookies
