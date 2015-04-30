@@ -18,6 +18,7 @@ var WINTER_2013_TERM = '2013' + WINTER_CODE;
 var FALL_2013_TERM = '2013' + FALL_CODE;
 var WINTER_2014_TERM = '2014' + WINTER_CODE;
 var FALL_2014_TERM = '2014' + FALL_CODE;
+var WINTER_2015_TERM = '2015' + WINTER_CODE;
 
 var j = request.jar(new FileCookieStore('cookies.json'));
 request = request.defaults({ jar: j });
@@ -52,13 +53,13 @@ function getPinNumber(callback) {
 if(!STUDENT_NUMBER) {
   getStudentNumber(function() {
     getPinNumber(function() {
-      getGrades();
+      getGrades(false);
       rl.close();
     });
   });
 } else if(!PIN_NUMBER) {
   getPinNumber(function() {
-    getGrades();
+    getGrades(false);
     rl.close();
   });
 } else {
@@ -92,11 +93,12 @@ function parseGradeHTML(html, wasTokenAttempt) {
     done: function (errors, window) {
       var $ = window.$;
       if($("title").text() === 'User Login') {
-        if(wasTokenAttempt) {
+        if (wasTokenAttempt) {
           console.log('Login failed with token, attempting again with credentials...');
           loginThenGetGrades();
         } else {
           console.log('Your login failed. Please check your login credentials.');
+          loginThenGetGrades();
         }
       } else {
         var count = 0;
