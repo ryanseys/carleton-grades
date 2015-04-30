@@ -10,6 +10,13 @@ Clone this repo and then:
 npm install
 ```
 
+Set your environment variables with your credentials:
+
+``` sh
+export CARLETON_STUDENT_NUMBER=100123456
+export CARLETON_PIN=123456
+```
+
 ## Usage
 
 `cd` into the directory then:
