@@ -68,7 +68,7 @@ if(!STUDENT_NUMBER) {
 }
 
 function getGrades(wasTokenAttempt) {
-  request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': FALL_2014_TERM } }, function (err, resp) {
+  request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': WINTER_2015_TERM } }, function (err, resp) {
     parseGradeHTML(resp.body, wasTokenAttempt);
   });
 }
