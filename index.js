@@ -7,18 +7,24 @@ var request = require("request");
 var LOGIN_URL = 'https://central.carleton.ca/prod/twbkwbis.P_ValLogin';
 var VIEW_GRADE_URL = 'https://central.carleton.ca/prod/bwskogrd.P_ViewGrde';
 var WINTER_CODE = '10';
+var SUMMER_CODE = '20';
 var FALL_CODE = '30';
 
 var FALL_2010_TERM = '2010' + FALL_CODE;
 var WINTER_2011_TERM = '2011' + WINTER_CODE;
+var SUMMER_2011_TERM = '2011' + SUMMER_CODE;
 var FALL_2011_TERM = '2011' + FALL_CODE;
 var WINTER_2012_TERM = '2012' + WINTER_CODE;
+var SUMMER_2012_TERM = '2012' + SUMMER_CODE;
 var FALL_2012_TERM = '2012' + FALL_CODE;
 var WINTER_2013_TERM = '2013' + WINTER_CODE;
+var SUMMER_2013_TERM = '2013' + SUMMER_CODE;
 var FALL_2013_TERM = '2013' + FALL_CODE;
 var WINTER_2014_TERM = '2014' + WINTER_CODE;
+var SUMMER_2014_TERM = '2014' + SUMMER_CODE;
 var FALL_2014_TERM = '2014' + FALL_CODE;
 var WINTER_2015_TERM = '2015' + WINTER_CODE;
+var SUMMER_2015_TERM = '2015' + SUMMER_CODE;
 
 if(!fs.existsSync('cookies.json')){
   fs.writeFile('cookies.json', '{}', function (err) {
@@ -75,7 +81,7 @@ if(!STUDENT_NUMBER) {
 }
 
 function getGrades(wasTokenAttempt) {
-  request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': WINTER_2015_TERM } }, function (err, resp) {
+  request.post({ url: VIEW_GRADE_URL, form:{ 'term_in': SUMMER_2015_TERM } }, function (err, resp) {
     parseGradeHTML(resp.body, wasTokenAttempt);
   });
 }
